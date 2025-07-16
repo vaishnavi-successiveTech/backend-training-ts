@@ -1,13 +1,13 @@
 import { NextFunction ,Response,Request} from "express";
 import jwt from "jsonwebtoken";
-import { json } from "stream/consumers";
+
 export const validateUsers= (req:Request,res:Response,next:NextFunction)=>{
     const {name,password} = req.body;
-    
-    console.log("calling");
+    let isAuthorized=false;
     console.log("name is",name);
-    if(name == "Nayan" && password=="2486"){
-        console.log("I have checked")
+    if(name && password){
+        isAuthorized=true;
+        console.log("Login successfully")
         next();
     }else{
         console.log("pending")
