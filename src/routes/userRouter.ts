@@ -7,10 +7,10 @@ import { logger } from '../middleware/logger';
 
 const router=Router();
 
-router.post("/loginV",logger,validateUsers,dataValidate);
-router.get('/userdetails',logger,getUsers);
-router.post("/postdata" ,createUser);
-router.post("/login",validateUsers,dataValidate);
-router.post('/loginData',validateUsers,validateJwt);
-router.get("/loginjwt",validateUserJwt);
+
+router.get('/userdetails',logger,getUsers); // mock data call.
+router.post("/postdata" ,logger,createUser); // without jwt check validation
+router.post('/login',logger,validateUsers,validateJwt); // generate jwt 
+router.get("/secure",validateUserJwt); // verify jwt 
+
 export { router };
