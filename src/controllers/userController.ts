@@ -29,6 +29,14 @@ export const dataValidate=(req:Request,res:Response)=>{
   res.status(200).send("data recieved");
 }
 
+// for check validation only 
+export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
+  console.log("Validation has to be checked ");
+  const data=req.body;
+  res.status(200).json({
+    success:"true",
+  message:"Validation checked here come from controller"  })
+}
 
 
 

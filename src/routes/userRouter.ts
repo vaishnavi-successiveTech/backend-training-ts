@@ -2,8 +2,15 @@ import express from 'express';
 import { Router } from 'express';
 import { createUser, dataValidate, getUsers } from '../controllers/userController';
 import { validateUserJwt, validateUsers } from '../middleware/validateUser';
+import { NextFunction,Request,Response } from 'express';
 import { validateJwt } from '../controllers/authController';
 import { logger } from '../middleware/logger';
+import { validateSchema } from '../middleware/validateSchema';
+import { validateform } from '../middleware/validateform';
+import { validateParams } from '../middleware/validateParams';
+import { geolocation } from '../middleware/geolocation';
+
+import { checkDynamic } from '../middleware/validationRules';
 
 const router=Router();
 
@@ -12,5 +19,18 @@ router.get('/userdetails',logger,getUsers); // mock data call.
 router.post("/postdata" ,logger,createUser); // without jwt check validation
 router.post('/login',logger,validateUsers,validateJwt); // generate jwt 
 router.get("/secure",validateUserJwt); // verify jwt 
+router.post("/validate",validateSchema,validateJwt);
+router.post("/student",checkDynamic,(req:Request,res:Response,next:NextFunction)=>{
+    res.status(200).send("successful log in to student");
+})
+router.post("/teacher",checkDynamic,(req:Request,res:Response,next:NextFunction)=>{
+    res.status(200).send("successful log in teacher");
+})
+// form check validation
+router.post("/validateform",validateform ,validateSchema);
+router.post("/validateform/:id",validateParams ,validateSchema);
+router.get("/location",geolocation,(req, res) => {
+  res.send(" You are allowed to access this route.");
+});
 
 export { router };
