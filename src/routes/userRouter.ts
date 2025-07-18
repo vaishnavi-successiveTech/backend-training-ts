@@ -27,8 +27,8 @@ router.post("/teacher",checkDynamic,(req:Request,res:Response,next:NextFunction)
     res.status(200).send("successful log in teacher");
 })
 // form check validation
-router.post("/validateform",validateform ,validateSchema);
-router.post("/validateform/:id",validateParams ,validateSchema);
+router.post("/validateform",validateform ,dataValidate);
+router.post("/validateform/:id",validateParams ,dataValidate);
 router.get("/location",geolocation,(req, res) => {
   res.send(" You are allowed to access this route.");
 });
