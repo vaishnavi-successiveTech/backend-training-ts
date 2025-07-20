@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { badRequest, conflict, forbidden, internalServerError, notFound, unauthorized, validationError } from "../controllers/errorController";
 export const dynamicError=Router();
-dynamicError.get('/error/400', badRequest);
-dynamicError.get('/error/401', unauthorized);
-dynamicError.get('/error/403', forbidden);
-dynamicError.get('/error/404', notFound); 
-dynamicError.get('/error/409', conflict);
-dynamicError.get('/error/422', validationError);
-dynamicError.get('/error/500', internalServerError);
+dynamicError.get('/400', badRequest);
+dynamicError.get('/401', unauthorized);
+dynamicError.get('/403', forbidden);
+dynamicError.get('/404', notFound); 
+dynamicError.get('/409', conflict);
+dynamicError.get('/422', validationError);
+dynamicError.get('/500', internalServerError);
