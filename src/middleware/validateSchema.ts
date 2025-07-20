@@ -13,10 +13,12 @@ export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
 
     if(error){
         console.error('Validation failed',error.details);
-        res.status(501).send("some  validation need to be followed(error)");
+        // res.status(501).send("some  validation need to be followed(error)");
+        return next(new Error(error.details[0].message)); //  to send it to the errorHandler
     }
     else{
         console.log('Validation succeded',value);
+        next(); // // Continue to controller if validation passes
         // res.status(200).json(
         //     {
         //         success:"true",
