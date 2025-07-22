@@ -15,10 +15,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { router } from "./routes/userRouter";
-import { logger } from './middleware/logger';
 import { errorHandler } from './middleware/errorHandle';
 import { customHeader } from './middleware/CustomHeader';
-import { basicLimiter } from './controllers/ratelimiter';
+import { basicLimiter } from './middleware/ratelimiter';
 dotenv.config();
 const app = express();
 const PORT = 3000;
@@ -26,10 +25,9 @@ const limit=5;
 app.use(basicLimiter(limit, 60000));
 app.use(express.json());
 app.use(customHeader('by vaishnavi'))
-// app.use(logger); // custom middleware for timestamp
 app.use("/api", router);
-app.use(errorHandler);
 
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(` Server is running on port ${PORT}`);
 });

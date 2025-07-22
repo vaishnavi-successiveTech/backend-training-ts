@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { users } from "../mockData";
+import { users } from "../utils/mockData"
 // import { users } from "../mockData";
 // fetch karana hai data 
 export const getUsers=(req:Request,res:Response)=>{
@@ -26,9 +26,21 @@ export const dataValidate=(req:Request,res:Response)=>{
   console.log("Data Validation check");
   const data=req.body; // data  come from the api whatever you give in the body of the api.
   console.log(data);
-  res.status(200).send("data recieved");
+   res.status(200).json({
+    success: true,
+    message: "Data received successfully",
+    data, 
+  });
 }
 
+// for check validation only 
+export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
+  console.log("Validation has to be checked ");
+  const data=req.body;
+  res.status(200).json({
+    success:"true",
+  message:"Validation checked "  })
+}
 
 
 
