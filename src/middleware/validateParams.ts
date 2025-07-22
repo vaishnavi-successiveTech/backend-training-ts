@@ -8,12 +8,14 @@ export const validateParams=(req:Request,res:Response,next:NextFunction)=>{
      const {id}=req.params;
      
      if(isNaN(Number(id))){
-      return   res.status(500).send("Error here in the params");
-
+      return   res.status(500).json({
+        success:"false",
+        message:"Params is not correct"
+      });
      }
-
-    return res.status(200).json({
-            success:"true",
-            message:"Params are verified"
-             });
+//     return res.status(200).json({
+//             success:"true",
+//             message:"Params are verified"
+//              });
+             next();
 }

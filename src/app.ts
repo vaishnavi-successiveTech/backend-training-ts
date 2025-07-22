@@ -17,12 +17,12 @@ import dotenv from 'dotenv';
 import { router } from "./routes/userRouter";
 import { errorHandler } from './middleware/errorHandle';
 import { customHeader } from './middleware/CustomHeader';
-import { basicLimiter } from './middleware/ratelimiter';
+// import { basicLimiter } from './middleware/ratelimiter';
 dotenv.config();
 const app = express();
 const PORT = 3000;
-const limit=5;
-app.use(basicLimiter(limit, 60000));
+// const limit=5;
+// app.use(basicLimiter(limit, 60000));
 app.use(express.json());
 app.use(customHeader('by vaishnavi'))
 // app.use(logger); // custom middleware for timestamp

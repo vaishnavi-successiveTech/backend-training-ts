@@ -20,17 +20,26 @@ router.post("/postdata" ,logger,createUser); // without jwt check validation
 router.post('/login',logger,validateUsers,validateJwt); // generate jwt 
 router.get("/secure",validateUserJwt); // verify jwt 
 router.post("/validate",validateSchema,validateJwt);
-router.post("/student",checkDynamic,(req:Request,res:Response,next:NextFunction)=>{
-    res.status(200).send("successful log in to student");
-})
+router.post(
+  "/student",
+  checkDynamic,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json({
+      success: true,
+      message: " Successful login to student route",
+    });
+  }
+);
 router.post("/teacher",checkDynamic,(req:Request,res:Response,next:NextFunction)=>{
-    res.status(200).send("successful log in teacher");
+     res.status(200).json({
+      success: true,
+      message: " Successful login to student route",
+    });
 })
 // form check validation
 router.post("/validateform",validateform ,dataValidate);
-router.post("/validateform/:id",validateParams ,dataValidate);
+router.post("/validateparam/:id",validateParams,validateSchema ,dataValidate);
 router.get("/location",geolocation,(req, res) => {
   res.send(" You are allowed to access this route.");
 });
-
 export { router };

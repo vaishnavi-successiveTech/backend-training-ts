@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { User } from "../types";
 
 export const users:User[] = [
   { id: 1, name: 'Vaishnavi', email: 'vaish@example.com' ,role:"Admin"},
