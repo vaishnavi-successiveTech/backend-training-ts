@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { countryService } from "./country/services/country.service";
+import { countryService } from "./services/country.service";
 
 dotenv.config();
 
