@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { countryService } from "../services/country.service";
+import { countryService } from "./country/services/country.service";
 
 dotenv.config();
 
@@ -27,10 +27,10 @@ const seedCountries = async (): Promise<void> => {
     await countryService.insertManyCountries(countries);
     console.log("Countries seeded successfully");
 
-    process.exit(0);
+   
   } catch (error) {
     console.error(" Seeding failed:", error);
-    process.exit(1);
+  
   }
 };
 
