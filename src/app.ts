@@ -27,7 +27,6 @@ const limit=5;
 app.use(basicLimiter(limit, 60000));
 app.use(express.json());
 app.use(customHeader('by vaishnavi'))
-// app.use(logger); // custom middleware for timestamp
 app.use("/api", router);
 app.use("/error",dynamicError);
 app.use(errorMiddleware);
