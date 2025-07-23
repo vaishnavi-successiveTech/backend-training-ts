@@ -1,7 +1,7 @@
 import { NextFunction ,Response,Request} from "express";
 import jwt from "jsonwebtoken";
-
-export const validateUsers= (req:Request,res:Response,next:NextFunction)=>{
+export class ValidateUsers{
+public  validateUsers= (req:Request,res:Response,next:NextFunction)=>{
     const {name,password} = req.body;
     let isAuthorized=false;
     console.log("name is",name);
@@ -24,7 +24,7 @@ export const validateUsers= (req:Request,res:Response,next:NextFunction)=>{
         console.log("some error")
     }
 }
-export const validateUserJwt=(req:Request,res:Response,next:NextFunction)=>{
+public validateUserJwt=(req:Request,res:Response,next:NextFunction)=>{
     try{
         const token : any = req.headers.authorization; // has to set header in the header to verify it 
 
@@ -38,4 +38,5 @@ export const validateUserJwt=(req:Request,res:Response,next:NextFunction)=>{
         console.log("Something went wrong ",err);
 
     }
+}
 }

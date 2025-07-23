@@ -4,3 +4,10 @@ export interface User {
   email: string;
   role: string;
 }
+
+// import { Request, Response, NextFunction, RequestHandler } from "express";
+
+// // export interface ICustomHeader {
+// //   data: string;
+// //   getMiddleware(): RequestHandler;
+// // }

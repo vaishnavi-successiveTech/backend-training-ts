@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { IValidateJwt } from "../interfaces/IController";
 
 interface Prop {
   expiresIn: string;
 }
+export class ValidateJwt implements IValidateJwt{
 
-export const validateJwt = (
+public validateJwt = (
   req: Request ,
   res: Response,
   next: NextFunction
@@ -43,3 +45,4 @@ export const validateJwt = (
     return res.status(401).send("Invalid name or password");
   }
 };
+}
