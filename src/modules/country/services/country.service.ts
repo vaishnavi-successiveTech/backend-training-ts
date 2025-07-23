@@ -1,12 +1,10 @@
-// // handle main business logic 
+import { ICountry } from "../../../interfaces/ICountry";
+import { countryRepository } from "../repository/country.repo";
 
-// import { ICountry } from "../../../interfaces/ICountry";
-// import { CountryRepository } from "../repository/country.repo";
+class CountryService {
+  insertManyCountries = async (data: ICountry[]) => {
+    return await countryRepository.insertManyCountries(data);
+  };
+}
 
-
-// export class CalledountryService{
-//     insertManyCountries=async(data:ICountry[])=>{
-//         return await CountryRepository.insertManyCountries(data);
-        
-//     }
-// // }
+export const countryService = new CountryService();

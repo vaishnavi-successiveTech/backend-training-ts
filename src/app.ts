@@ -19,7 +19,7 @@ import { errorHandler } from './middleware/errorHandle';
 import { CustomHeader } from './middleware/CustomHeader';
 // import { basicLimiter } from './middleware/ratelimiter';
 import { ErrorMiddleWare } from './middleware/errorMiddleware';
-import { countryRoute } from './routes/CountryRoutes';
+// import { countryRoute } from './routes/CountryRoutes';
 import { connnection } from './config/db';
 
 
@@ -37,7 +37,7 @@ app.use(custom.customHeader("created-by",'vaishnavi'))
 // app.use(logger); // custom middleware for timestamp
 app.use("/api", router);
 // app.use("/error",dynamicError);
-app.use("/country",countryRoute);
+// app.use("/country",countryRoute);
 app.use(errorHandle.errorHandleMiddleware);
 
 app.use(errorHandler); // Called for all errors, including 404, 422, 500

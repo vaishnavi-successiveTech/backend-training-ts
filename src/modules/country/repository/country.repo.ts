@@ -1,11 +1,14 @@
 import { ICountry } from "../../../interfaces/ICountry";
-import { countryModel } from "../../../models/countryModel";
+import CountryModel from "../../../models/countryModel";
 
-export class CountryRepository{
-    public insertManyCountries=async(countries:ICountry[])=>{ // insert countries name in array of object form
-        return await countryModel.insertMany(countries);
-    };
-    public getAllCountries=async()=>{
-        return await countryModel.find(); // to find all the name of the countries
-    }
+class CountryRepository {
+  insertManyCountries = async (countries: ICountry[]) => {
+    return await CountryModel.insertMany(countries);
+  };
+
+  getAllCountries = async () => {
+    return await CountryModel.find();
+  };
 }
+
+export const countryRepository = new CountryRepository();
