@@ -22,6 +22,7 @@ import { ErrorMiddleWare } from './middleware/errorMiddleware';
 
 import { connnection } from './config/db';
 import { countryRoute } from './routes/CountryRoutes';
+import seedCountries from './modules/country/seedCountries';
 
 
 dotenv.config();
@@ -45,8 +46,18 @@ app.use(errorHandler); // Called for all errors, including 404, 422, 500
 // app.listen(PORT, () => {
 //   console.log(` Server is running on port ${PORT}`);
 // });
-connnection().then(()=>{
-  app.listen(3000,()=>{
-    console.log("app is running on port 3000");
+// connnection().then(()=>{
+//   app.listen(3000,()=>{
+//     console.log("app is running on port 3000");
+//   })
+// })
+connnection()
+  .then(async () => {
+    await seedCountries();
+    app.listen(PORT, () => {
+      console.log( `Server running on http://localhost:${PORT}`);
+    });
   })
-})
+  .catch((err) => {
+    console.error('Failed to connect to DB:', err);
+  });
