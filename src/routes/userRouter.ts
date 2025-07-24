@@ -15,6 +15,8 @@ import { AsyncErrorRoute } from '../controllers/errorAsyncController';
 
 import { HealthControls } from '../controllers/healthController';
 import { UserController } from '../controllers/userController';
+import { movieController } from '../modules/movies/controller/movieController';
+import { movieSchema } from '../modules/movies/validateMovie';
 
 const router=Router();
 // const user=new userController();
@@ -31,7 +33,8 @@ const log=new LoggerMiddleware();
 const valUsers=new ValidateUsers();
 const asyncError=new AsyncErrorRoute();
 const pError=new AsyncError();
-
+// const   movieD   =new MovieController();
+const valMovie=new movieSchema();
 
 router.get('/userdetails',log.logRequest,user.getUsers.bind(user)); // mock data call.
 router.post("/postdata" ,log.logRequest,user.createUser.bind(user)); // without jwt check validation
@@ -62,4 +65,7 @@ router.post('/register', schema.validateSchema, (req, res) => {
 });// validateSchema.ts has been checked only
 
 router.get("/heathCheck",health.healthCheck);
+// mongoDb
+
+router.post("/movies",valMovie.validateMovies,movieController.movieResult);
 export { router };
