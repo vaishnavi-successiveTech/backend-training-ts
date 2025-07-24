@@ -18,8 +18,8 @@ import { router } from "./routes/userRouter";
 import { errorHandler } from './middleware/errorHandle';
 import { customHeader } from './middleware/CustomHeader';
 import { basicLimiter } from './middleware/ratelimiter';
-import { errorHandleMiddleware } from './middleware/errorMiddleware';
 
+import { errorHandleMiddleware } from './middleware/errorMiddleware';
 
 dotenv.config();
 const app = express();
@@ -33,6 +33,12 @@ app.use("/api", router);
 app.use(errorHandleMiddleware);
 
 app.use(errorHandler); // Called for all errors, including 404, 422, 500
+app.use((req, res, next) => {
+  res.status(404).json({
+    success:false,
+    message:"NOT found page"
+  })
+});
 app.listen(PORT, () => {
   console.log(` Server is running on port ${PORT}`);
 });

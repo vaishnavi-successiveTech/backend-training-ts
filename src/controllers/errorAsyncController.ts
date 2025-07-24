@@ -5,7 +5,6 @@ export const asyncErrorRoute = async (req:Request, res:Response, next:NextFuncti
   try {
     throw new Error("Something went wrong in async route");
   } 
-
   catch (err) {
     next(err);  // go to the errorHandler.ts
   }

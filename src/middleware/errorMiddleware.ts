@@ -1,7 +1,16 @@
+// import { Request, Response, NextFunction } from 'express';
+// import createError from 'http-errors';
+
+// //Called when no route matched
+// export const errorMiddleware = (req: Request, res: Response, next: NextFunction) => {
+//   next(createError(404, `Route ${req.originalUrl} not found`));
+// };
+// // check for 404 if it was not and what it is used req.originalUrl.
+
 import { Request, Response, NextFunction } from "express";
 import { HttpError } from "http-errors";
-
 // Error-handling middleware
+
 export const errorHandleMiddleware = (
   err: HttpError,
   req: Request,
@@ -54,7 +63,7 @@ export const errorHandleMiddleware = (
       message,
     });
   } else {
-    // For other unknown errors
+   
     res.status(statusCode).json({
       success: false,
       error: "Unknown Error",
@@ -62,3 +71,4 @@ export const errorHandleMiddleware = (
     });
   }
 };
+

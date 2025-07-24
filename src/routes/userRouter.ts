@@ -31,7 +31,6 @@ router.post('/student', checkDynamic, (req: Request, res: Response) => {
     message: 'Successful login to student route'
   });
 });
-
 router.post('/teacher', checkDynamic, (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
@@ -51,5 +50,6 @@ router.get('/location', geolocation, (req: Request, res: Response) => {
 
 router.get('/error-async', asyncError);              
 router.get('/error/async', asyncErrorRoute);         
+
 
 export { router };

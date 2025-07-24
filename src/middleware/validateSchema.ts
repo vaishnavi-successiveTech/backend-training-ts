@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
 const userSchema=Joi.object({
-    name:Joi.string().alphanum().min(3).max(30).required(),
+    name: Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z\s'-]+$/)
+  .required(),
     email:Joi.string().email().required(),
     password:Joi.string().pattern(new RegExp ('^[a-zA-Z0-9]{3,30}$')).required(),
 });
