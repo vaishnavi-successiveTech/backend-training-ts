@@ -2,8 +2,8 @@ import mongoose  from "mongoose";
 
 export const connnection=async()=>{
     try{
-        await mongoose.connect('mongodb://localhost:27017/typescriptDb');
-        console.log("connncted to db ");
+        await mongoose.connect('mongodb://localhost:27017/typescript');
+        console.log("connncted to db typescript ");
 
     }
     catch(error){
