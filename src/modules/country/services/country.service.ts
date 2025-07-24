@@ -1,4 +1,4 @@
-import { ICountry } from "../../../interfaces/ICountry";
+import { ICountry } from "../../../entities/ICountry";
 import { countryRepository } from "../repository/country.repo";
 
 class CountryService {

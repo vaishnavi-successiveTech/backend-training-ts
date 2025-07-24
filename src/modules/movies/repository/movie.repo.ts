@@ -1,4 +1,4 @@
-import { IMovie } from "../../../interfaces/IMovie";
+import { IMovie } from "../../../entities/IMovie";
 import MovieModel from "../../../models/movieModel";
 
 

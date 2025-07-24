@@ -33,7 +33,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi, { ObjectSchema } from "joi";
 
-import { Iuser } from "../interfaces/Iuser";
+import { Iuser } from "../entities/Iuser";
 export class Validate{
     private userDetails:ObjectSchema<Iuser>=Joi.object({
 

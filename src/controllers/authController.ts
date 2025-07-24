@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { IValidateJwt } from "../interfaces/IController";
+import { IValidateJwt } from "../entities/IController";
 
 interface Prop {
   expiresIn: string;

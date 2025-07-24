@@ -1,4 +1,4 @@
-import { IMovie } from "../../../interfaces/IMovie";
+import { IMovie } from "../../../entities/IMovie";
 import { movieRepository } from "../repository/movie.repo";
 
 class MovieService{

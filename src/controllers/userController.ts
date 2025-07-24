@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { users } from "../mockData";
-import { IUserController } from "../interfaces/IuserController";
+import { IUserController } from "../entities/IuserController";
 // import { users } from "../mockData";
 // fetch karana hai data
 export class UserController implements IUserController{

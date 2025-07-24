@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ICustomHeader } from "../interfaces/IMiddlewares";
+import { ICustomHeader } from "../entities/IMiddlewares";
 
 // export const customHeader=(data:string)=>{
 //     console.log("data",data);

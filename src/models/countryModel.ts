@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ICountry } from "../interfaces/ICountry";
+import { ICountry } from "../entities/ICountry";
 
 const countrySchema = new mongoose.Schema<ICountry>({
   name: { type: String, required: true },

@@ -1,7 +1,7 @@
 // middleware/CheckDynamic.ts
 import { Request, Response, NextFunction } from "express";
 import { schemaList } from "./schemaList";
-import { ICheckDynamic } from "../interfaces/IMiddlewares";
+import { ICheckDynamic } from "../entities/IMiddlewares";
 
 export class CheckDynamic implements ICheckDynamic {
   public validateDynamicSchema(req: Request, res: Response, next: NextFunction): void {

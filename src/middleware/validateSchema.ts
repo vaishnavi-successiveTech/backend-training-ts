@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import Joi from "joi";
-import { UserRequest } from "../interfaces/IMiddlewares";
+import { UserRequest } from "../entities/IMiddlewares";
 
 
 const userSchema = Joi.object({

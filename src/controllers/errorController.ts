@@ -1,7 +1,7 @@
 // Create scenarios that generate all possible error codes.
 import { NextFunction, Request, Response } from "express";
 import createError from 'http-errors';
-import { IErrorsClass } from "../interfaces/IController";
+import { IErrorsClass } from "../entities/IController";
 
 // 400 - bad reuqest
 
