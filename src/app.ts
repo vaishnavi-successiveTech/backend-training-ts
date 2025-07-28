@@ -16,13 +16,15 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { router } from "./routes/userRouter";
 import { errorHandler } from './middleware/errorHandle';
-import { CustomHeader } from './middleware/CustomHeader';
-// import { basicLimiter } from './middleware/ratelimiter';
-import { ErrorMiddleWare } from './middleware/errorMiddleware';
 
+import { CustomHeader } from './middleware/CustomHeader';
+
+import { ErrorMiddleWare } from './middleware/errorMiddleware';
 import { connnection } from './config/db';
 import { countryRoute } from './routes/CountryRoutes';
 import seedCountries from './modules/country/seedCountries';
+import { basicLimiter } from './middleware/ratelimiter';
+
 
 
 dotenv.config();
@@ -33,7 +35,7 @@ const PORT = 3000;
 const limit=5;
 
 const custom=new CustomHeader(); //
-// app.use(basicLimiter(limit, 60000));
+app.use(basicLimiter(limit, 60000));
 app.use(express.json());
 app.use(custom.customHeader("created-by",'vaishnavi'))
 // app.use(logger); // custom middleware for timestamp

@@ -11,7 +11,6 @@ import { Request, Response, NextFunction } from "express";
 import { HttpError } from "http-errors";
 // Error-handling middleware
 export class ErrorMiddleWare{
-
 public errorHandleMiddleware = (
   err: HttpError,
   req: Request,

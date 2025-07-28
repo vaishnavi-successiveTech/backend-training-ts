@@ -2,27 +2,40 @@ import { NextFunction, Response } from "express";
 import Joi from "joi";
 import { UserRequest } from "../interfaces/IMiddlewares";
 
-
-const userSchema = Joi.object({
-  name: Joi.string().alphanum().min(3).max(30).required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+const userSchema=Joi.object({
+    name: Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z\s'-]+$/)
+  .required(),
+    email:Joi.string().email().required(),
+    password:Joi.string().pattern(new RegExp ('^[a-zA-Z0-9]{3,30}$')).required(),
 });
 
 export class SchemaValidation{
 public  validateSchema = (req: UserRequest, res: Response, next: NextFunction) => {
-  const { error, value } = userSchema.validate(req.body);
 
+
+    const{error,value} = userSchema.validate(req.body,{ abortEarly: false }); // postman se data jaegaa iske ander 
+    // aboutEarly:false is used to present each error.
   if (error) {
-    console.error("Validation failed", error.details);
-    // Send only the first validation message
+    console.error('Validation failed', error.details);
+   
+    const messages = error.details.map(detail => detail.message); // now error come in array of objects
+
     return res.status(400).json({
       success: false,
-      error: error.details[0].message,
+      message: messages, // returns all errors, not just the first
     });
   }
+    else{
+        console.log('Validation succeded',value);
+        res.status(200).json(
+            {
+                success:"true",
+                message:"Validation fullfilled"
+            }
+        )
+    }
 
-  console.log("Validation succeeded", value);
-  next();
-};
-}
+}}

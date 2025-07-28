@@ -2,9 +2,18 @@ import Joi from "joi";
 
 
 const student=Joi.object({
-    firstName:Joi.string().alphanum().min(3).max(30).required(),
-    lastName:Joi.string().alphanum().min(3).max(30).required(),
-    age:Joi.number()
+    firstName: Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z\s'-]+$/)
+  .required(),
+    lastName:Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z\s'-]+$/)
+  .required(),
+   age: Joi.number().integer().min(0).required()
+
 })
 
 const teacher=Joi.object({
