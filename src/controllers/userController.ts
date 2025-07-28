@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { users } from "../mockData";
+
 import { IUserController } from "../interfaces/IuserController";
+import { users } from "../utils/mockData"
 // import { users } from "../mockData";
 // fetch karana hai data
 export class UserController implements IUserController{
@@ -30,12 +31,17 @@ export class UserController implements IUserController{
     } catch (err) {
       console.log(err);
     }
+
   };
   public dataValidate = (req: Request, res: Response):void => {
     console.log("Data Validation check");
     const data = req.body; // data  come from the api whatever you give in the body of the api.
     console.log(data);
-    res.status(200).send("data recieved");
+    res.status(200).json({
+      success:true,
+      message:"Data received successfully",
+      data
+    });
   };
 
   // for check validation only
