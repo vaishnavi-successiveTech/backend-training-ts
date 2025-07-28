@@ -83,9 +83,9 @@ router.get("/userlogin", verifyToken, checkRole(["user", "admin"]), (req, res) =
 // });
 
 // admin check
-// router.get("/adminlogin", verifyToken, checkRole(["admin"]), (req, res) => {
-//   res.send("Welcome Admin");
-// });
+router.get("/adminlogin", verifyToken, checkRole(["admin"]), (req, res) => {
+  res.send("Welcome Admin");
+});
 
 
 export { router };
