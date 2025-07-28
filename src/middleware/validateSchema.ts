@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
 const userSchema=Joi.object({
-    name:Joi.string().alphanum().min(3).max(30).required(),
+    name: Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z\s'-]+$/)
+  .required(),
     email:Joi.string().email().required(),
     password:Joi.string().pattern(new RegExp ('^[a-zA-Z0-9]{3,30}$')).required(),
 });
@@ -11,8 +15,6 @@ export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
 
     const{error,value} = userSchema.validate(req.body,{ abortEarly: false }); // postman se data jaegaa iske ander 
     // aboutEarly:false is used to present each error.
-
-
   if (error) {
     console.error('Validation failed', error.details);
    
@@ -31,7 +33,6 @@ export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
                 message:"Validation fullfilled"
             }
         )
-
     }
  
 }
