@@ -5,7 +5,11 @@ import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
 const userDetails = Joi.object({
-  name: Joi.string().alphanum().min(3).max(30).required(),
+ name: Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z\s'-]+$/)
+  .required(),
   dob: Joi.date().less('now').iso(),
   email: Joi.string().email().required(),
   password: Joi.string()
