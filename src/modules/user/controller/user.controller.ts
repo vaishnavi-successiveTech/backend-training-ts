@@ -4,8 +4,10 @@ import { userService } from "../services/user.service";
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+      
     const user = await userService.createUser(req.body);
     res.status(201).json({ success: true, data: user });
+ 
   } catch (error) {
     next(error);
   }
@@ -23,7 +25,7 @@ export const loginUserController = async (req: Request, res: Response, next: Nex
       user: {
         id: result.user._id,
         email: result.user.email,
-        firstName: result.user.firstName,
+        firstName: result.user.name,
         role: result.user.role,
       },
     });
