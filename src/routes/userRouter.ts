@@ -17,6 +17,10 @@ import { HealthControls } from '../controllers/healthController';
 import { UserController } from '../controllers/userController';
 import { movieController } from '../modules/movies/controller/movieController';
 import { movieSchema } from '../modules/movies/validateMovie';
+import { validateUser } from '../modules/user/validateUser';
+import { createUser } from '../modules/user/controller/user.controller';
+import { verifyToken } from '../modules/user/verifyToken';
+import { checkRole } from '../modules/user/checkRole';
 
 const router=Router();
 // const user=new userController();
@@ -68,4 +72,21 @@ router.get("/heathCheck",health.healthCheck);
 // mongoDb
 
 router.post("/movies",valMovie.validateMovies,movieController.movieResult);
+// for user assignment-10
+router.post("/register",validateUser,createUser);
+// for login
+router.get("/userlogin", verifyToken, checkRole(["user", "admin"]), (req, res) => {
+  res.send("Welcome User");
+});
+// router.get("/user-dashboard", verifyToken, checkRole(["user"]), (req, res) => {
+//   res.send("Welcome User");
+// });
+
+// admin check
+// router.get("/adminlogin", verifyToken, checkRole(["admin"]), (req, res) => {
+//   res.send("Welcome Admin");
+// });
+
+
 export { router };
+
