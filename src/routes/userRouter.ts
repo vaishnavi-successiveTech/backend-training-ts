@@ -12,11 +12,11 @@ import { asyncError } from '../controllers/asyncController';
 import { asyncErrorRoute } from '../controllers/errorAsyncController';
 
 const router = Router();
-
-router.get('/userdetails', logger, getUsers);                     
-router.post('/postdata', logger, createUser);                    
-router.post('/login', logger, validateUsers, validateJwt);        
-router.get('/secure', validateUserJwt);                           
+                   
+router.get('/userdetails',logger,getUsers); // mock data call.
+router.post("/postdata" ,logger,createUser); // without jwt check validation
+router.post('/login',logger,validateUsers,validateJwt); // generate jwt 
+router.get("/secure",validateUserJwt); // verify jwt 
 
 router.post('/validate', validateSchema, validateJwt);            // schema validation with JWT
 router.post('/register', validateSchema, (req, res) => {          // only schema check
