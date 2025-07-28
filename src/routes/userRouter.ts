@@ -22,6 +22,7 @@ import { createUser, loginUserController } from '../modules/user/controller/user
 import { verify } from 'crypto';
 import { verifyToken } from '../modules/user/verifyToken';
 import { version } from 'os';
+import { checkRole } from '../modules/user/checkRole';
 // import { verifyToken } from '../modules/user/verifyToken';
 // import { checkRole } from '../modules/user/checkRole';
 
@@ -88,7 +89,7 @@ router.get("/userverify",verifyToken,(req, res) => {
 // });
 
 // admin check
-router.get("/adminlogin", verifyToken, checkRole(["admin"]), (req, res) => {
+router.get("/adminlogin", verifyToken, (req, res) => {
   res.send("Welcome Admin");
 });
 
@@ -97,4 +98,4 @@ export { router };
 
   // "name":"Nayan",
   //   "email":"abc@gmail.com",
-  //   "password":"2456"
+  //   "password":"454545"

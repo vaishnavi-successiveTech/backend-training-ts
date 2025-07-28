@@ -1,9 +1,17 @@
+
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { UserModel } from "../../models/UserModel";
+
+
+interface JwtPayload {
+  id: string;
+  role: string;
+}
 
 const secret = process.env.SECRET_KEY || "default_secret";
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith("Bearer ")) {
@@ -13,8 +21,15 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
   const token = header.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, secret);
-    res.locals.user = decoded; 
+    const decoded = jwt.verify(token, secret) as  JwtPayload;
+
+    const result=await UserModel.findById(decoded.id!);
+    if(!result){
+        return res.status(404).json({message:"User does not exist"});
+    }
+    if(result.role!=="admin")
+    {return res.status(403).json({message:"Not authorized"});}
+    // res.locals.user = decoded; 
     //   (req as AuthRequest).user = decoded; 
     // next();
     next();
