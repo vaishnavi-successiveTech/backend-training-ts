@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-import { Iuser } from "../entities/Iuser";
+import { IuserRegister } from "../entities/IuserRegister";
 
-const userSchema=new mongoose.Schema<Iuser>({
-    firstName:{type:String,required:true,unique:true},
-    email:{type:String,required:true},
+
+const userSchema=new mongoose.Schema<IuserRegister>({
+    name:{type:String,required:true},
+    email:{type:String,required:true,unique:true},
     password:{type:String,required:true},
     role:{type:String,required:true,default:"user"}
 });
-export const UserModel=mongoose.model<Iuser>("User",userSchema);
-export type { Iuser };
+export const UserModel=mongoose.model<IuserRegister>("User",userSchema);
+export type { IuserRegister };

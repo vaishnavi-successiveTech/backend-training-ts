@@ -1,33 +1,35 @@
-import { Iuser } from "../../../entities/Iuser";
+
+import { IuserRegister } from "../../../entities/IuserRegister";
 import { userRepo } from "../repository/user.repo";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const secret = process.env.SECRET_KEY || "default_secret";
 
-class UserService {
+class UserService  {
   
-  public createUser = async (userData: Iuser): Promise<Iuser> => {
-    try {
-    //       public createUser = async (userData: Iuser): Promise<Iuser> => {
-    // try {
-    //   const createdUser = await userRepo.insertManyUsers(userData);
-    //   return createdUser;
-    // } catch (error:any) {
-    //     console.log("Erroroccurred",error );
-    //     throw new Error("failed: " + error.message);
-    // }
-
-      const hashedPassword = await bcrypt.hash(userData.password, 10);
-      userData.password = hashedPassword;
-
-      const createdUser = await userRepo.insertManyUsers(userData);
-      return createdUser;
-    } catch (error: any) {
-      console.log("Error occurred", error);
-      throw new Error("failed: " + error.message);
+ public createUser = async (userData: IuserRegister): Promise<IuserRegister> => {
+  try {
+    // Check if user already exists
+    const existingUser = await userRepo.findUserByEmail(userData.email);
+    console.log(existingUser);
+    if (existingUser) {
+      throw new Error("User already exists with this email");
     }
-  };
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    userData.password = hashedPassword;
+
+    // Insert the new user
+    const createdUser = await userRepo.insertManyUsers(userData);
+    return createdUser;
+  } catch (error: any) {
+    console.log("Error occurred", error);
+    throw new Error("failed: " + error.message);
+  }
+};
+
 
   public loginUser = async (email: string, password: string) => {
     const existingUser = await userRepo.findUserByEmail(email);

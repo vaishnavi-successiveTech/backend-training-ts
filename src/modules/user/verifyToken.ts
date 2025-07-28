@@ -4,13 +4,13 @@ import jwt from "jsonwebtoken";
 const secret = process.env.SECRET_KEY || "default_secret";
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
+  const header = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!header || !header.startsWith("Bearer ")) {
     return res.status(401).json({ success: false, message: "Access Denied. No token provided." });
   }
 
-  const token = authHeader.split(" ")[1];
+  const token = header.split(" ")[1];
 
   try {
     const decoded = jwt.verify(token, secret);

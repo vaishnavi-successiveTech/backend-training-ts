@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
 
 export const userValidationSchema = Joi.object({
-  firstName: Joi.string()
+  name: Joi.string()
     .min(3)
     .max(30)
     .pattern(/^[a-zA-Z]/)
@@ -13,8 +13,8 @@ export const userValidationSchema = Joi.object({
   role: Joi.string().valid("user", "admin").default("user"),
 });
 
-export const validateUser = (req: Request, res: Response, next: NextFunction) => {
-  const { error } = userValidationSchema.validate(req.body, { abortEarly: false });
+export const validateUserData = (req: Request, res: Response, next: NextFunction) => {
+  const { error, value } = userValidationSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
     const errorMessages = error.details.map((detail) => detail.message);
@@ -24,7 +24,9 @@ export const validateUser = (req: Request, res: Response, next: NextFunction) =>
       errors: errorMessages,
     });
   }
-
+  console.log("Validated value:", value);
+  req.body = value; // <-- use validated data
   next();
 };
+
 
