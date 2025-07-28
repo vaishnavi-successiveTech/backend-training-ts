@@ -1,55 +1,69 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
-import { createUser, dataValidate, getUsers } from '../controllers/userController';
-import { validateUserJwt, validateUsers } from '../middleware/validateUser';
-import { validateJwt } from '../controllers/authController';
-import { logger } from '../middleware/logger';
-import { validateSchema } from '../middleware/validateSchema';
-import { validateform } from '../middleware/validateform';
-import { validateParams } from '../middleware/validateParams';
-import { geolocation } from '../middleware/geolocation';
-import { checkDynamic } from '../middleware/validationRules';
-import { asyncError } from '../controllers/asyncController';
-import { asyncErrorRoute } from '../controllers/errorAsyncController';
+import express from 'express';
+import { Router } from 'express';
+import {  ValidateUsers } from '../middleware/validateUser';
+import { NextFunction,Request,Response } from 'express';
+import { ValidateJwt } from '../controllers/authController';
+import {  LoggerMiddleware } from '../middleware/logger';
+import { SchemaValidation,  } from '../middleware/validateSchema';
+import { Validate } from '../middleware/validateform';
+import { ParamValidator } from '../middleware/validateParams';
+import { GeoLocationMiddleware } from '../middleware/geolocation';
 
-const router = Router();
-                   
-router.get('/userdetails',logger,getUsers); // mock data call.
-router.post("/postdata" ,logger,createUser); // without jwt check validation
-router.post('/login',logger,validateUsers,validateJwt); // generate jwt 
-router.get("/secure",validateUserJwt); // verify jwt 
+import { CheckDynamic,  } from '../middleware/validationRules';
+import { AsyncError } from '../controllers/asyncController';
+import { AsyncErrorRoute } from '../controllers/errorAsyncController';
 
-router.post('/validate', validateSchema, validateJwt);            // schema validation with JWT
-router.post('/register', validateSchema, (req, res) => {          // only schema check
+import { HealthControls } from '../controllers/healthController';
+import { UserController } from '../controllers/userController';
+
+const router=Router();
+// const user=new userController();
+const user = UserController.getInstance();
+
+const health=new HealthControls();
+const form =new Validate();
+const val=new ValidateJwt()
+const params=new ParamValidator();
+const dynamic=new CheckDynamic();
+const schema=new SchemaValidation();
+const geo=new GeoLocationMiddleware();
+const log=new LoggerMiddleware();
+const valUsers=new ValidateUsers();
+const asyncError=new AsyncErrorRoute();
+const pError=new AsyncError();
+
+
+router.get('/userdetails',log.logRequest,user.getUsers.bind(user)); // mock data call.
+router.post("/postdata" ,log.logRequest,user.createUser.bind(user)); // without jwt check validation
+router.post('/login',log.logRequest,valUsers.validateUsers,val.validateJwt); // generate jwt 
+router.get("/secure",valUsers.validateUserJwt); // verify jwt 
+router.post("/validate",schema.validateSchema,val.validateJwt); // validateSchema  is used here .
+router.post("/student",dynamic.validateDynamicSchema,(req:Request,res:Response,next:NextFunction)=>{
+    res.status(200).send("successful log in to student");
+})
+router.post("/teacher",dynamic.validateDynamicSchema,(req:Request,res:Response,next:NextFunction)=>{
+    res.status(200).send("successful log in teacher");
+})
+// form check validation
+router.post("/validateform",form.validateform ,user.dataValidate.bind(user));
+router.post("/validateform/:id",params.validateParams ,val.validateJwt,user.dataValidate.bind(user));
+
+router.get("/location",geo.geolocation,(req, res) => {
+  res.send(" You are allowed to access this route.");
+});
+
+router.get("/error-async",asyncError.asyncErrorRoute); // intentially error is thrown using errorHandler.
+router.get("/error/async", pError.asyncError); // ques - 5
+router.post('/register', schema.validateSchema, (req, res) => {
   res.status(200).json({
     success: true,
     message: 'User data is valid'
   });
-});
-router.post('/student', checkDynamic, (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: 'Successful login to student route'
-  });
-});
-router.post('/teacher', checkDynamic, (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: 'Successful login to teacher route'
-  });
-});
 
+});// validateSchema.ts has been checked only
 
-router.post('/validateform', validateform, dataValidate);
-router.post('/validateform/:id', validateParams, dataValidate);
-router.post('/validateparam/:id', validateParams, validateSchema, dataValidate);
-
-router.get('/location', geolocation, (req: Request, res: Response) => {
-  res.send('You are allowed to access this route.');
-});
-
-
-router.get('/error-async', asyncError);              
-router.get('/error/async', asyncErrorRoute);         
-
-
+router.get("/heathCheck",health.healthCheck);
 export { router };
+
+
+

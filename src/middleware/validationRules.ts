@@ -1,15 +1,17 @@
-import { NextFunction,Request,Response } from "express";
+// middleware/CheckDynamic.ts
+import { Request, Response, NextFunction } from "express";
 import { schemaList } from "./schemaList";
+import { ICheckDynamic } from "../interfaces/IMiddlewares";
 
-export const checkDynamic=(req:Request,res:Response,next:NextFunction)=>{
+export class CheckDynamic implements ICheckDynamic {
+  public validateDynamicSchema(req: Request, res: Response, next: NextFunction) {
+    const path: string[] = req.url.split("/");
+    console.log("Path:", path);
 
-    const path:string[]=req.url.split("/");
-    console.log(path);
-
-    const currSchema=schemaList[`${path[1].trim()}`];
-    if(!currSchema){
-        return res.status(404).send("wrong path");
-
+    const currSchema = schemaList[path[1]?.trim()];
+    if (!currSchema) {
+      res.status(404).send("Wrong path");
+      return;
     }
     const {error}=currSchema.validate(req.body,{ abortEarly: false });
    if (error) {
@@ -22,4 +24,4 @@ export const checkDynamic=(req:Request,res:Response,next:NextFunction)=>{
     });
   }
    next();
-}
+}}

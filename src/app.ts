@@ -16,21 +16,27 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { router } from "./routes/userRouter";
 import { errorHandler } from './middleware/errorHandle';
-import { customHeader } from './middleware/CustomHeader';
-import { basicLimiter } from './middleware/ratelimiter';
 
-import { errorHandleMiddleware } from './middleware/errorMiddleware';
+import { CustomHeader } from './middleware/CustomHeader';
+// import { basicLimiter } from './middleware/ratelimiter';
+import { ErrorMiddleWare } from './middleware/errorMiddleware';
+
 
 dotenv.config();
+
+const errorHandle=new ErrorMiddleWare();
 const app = express();
 const PORT = 3000;
 const limit=5;
-app.use(basicLimiter(limit, 60000));
-app.use(express.json());
-app.use(customHeader('by vaishnavi'))
-app.use("/api", router);
 
-app.use(errorHandleMiddleware);
+const custom=new CustomHeader(); //
+// app.use(basicLimiter(limit, 60000));
+app.use(express.json());
+app.use(custom.customHeader("created-by",'vaishnavi'))
+// app.use(logger); // custom middleware for timestamp
+app.use("/api", router);
+// app.use("/error",dynamicError);
+app.use(errorHandle.errorHandleMiddleware);
 
 app.use(errorHandler); // Called for all errors, including 404, 422, 500
 app.use((req, res, next) => {

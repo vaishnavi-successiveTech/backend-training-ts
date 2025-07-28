@@ -1,5 +1,6 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import Joi from "joi";
+import { UserRequest } from "../interfaces/IMiddlewares";
 
 const userSchema=Joi.object({
     name: Joi.string()
@@ -11,7 +12,9 @@ const userSchema=Joi.object({
     password:Joi.string().pattern(new RegExp ('^[a-zA-Z0-9]{3,30}$')).required(),
 });
 
-export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
+export class SchemaValidation{
+public  validateSchema = (req: UserRequest, res: Response, next: NextFunction) => {
+
 
     const{error,value} = userSchema.validate(req.body,{ abortEarly: false }); // postman se data jaegaa iske ander 
     // aboutEarly:false is used to present each error.
@@ -34,5 +37,5 @@ export const validateSchema=(req:Request,res:Response,next:NextFunction)=>{
             }
         )
     }
- 
-}
+
+}}

@@ -10,8 +10,8 @@
 import { Request, Response, NextFunction } from "express";
 import { HttpError } from "http-errors";
 // Error-handling middleware
-
-export const errorHandleMiddleware = (
+export class ErrorMiddleWare{
+public errorHandleMiddleware = (
   err: HttpError,
   req: Request,
   res: Response,
@@ -20,6 +20,7 @@ export const errorHandleMiddleware = (
   const statusCode = err.status || 500;
   const message = err.message || "Something went wrong";
 
+  
   if (statusCode === 400) {
     res.status(400).json({
       success: false,
@@ -71,4 +72,4 @@ export const errorHandleMiddleware = (
     });
   }
 };
-
+}

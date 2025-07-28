@@ -3,19 +3,19 @@
 
 import { NextFunction, Request, Response } from "express";
 
+interface IParamValidator {
+  validateParams(req: Request, res: Response, next: NextFunction): void;
+}
 
-export const validateParams=(req:Request,res:Response,next:NextFunction)=>{
-     const {id}=req.params;
-     
-     if(isNaN(Number(id))){
-      return   res.status(500).json({
-        success:"false",
-        message:"Params is not correct"
-      });
-     }
-//     return res.status(200).json({
-//             success:"true",
-//             message:"Params are verified"
-//              });
-             next();
+export class ParamValidator implements IParamValidator {
+  public validateParams(req: Request, res: Response, next: NextFunction): void {
+    const { id } = req.params;
+
+    if (isNaN(Number(id))) {
+      res.status(500).send("Invalid parameter: ID must be a number");
+      return;
+    }
+
+    next();
+  }
 }
