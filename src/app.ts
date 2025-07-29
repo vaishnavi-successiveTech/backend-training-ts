@@ -21,6 +21,8 @@ import { CustomHeader } from './middleware/CustomHeader';
 import { ErrorMiddleWare } from './middleware/errorMiddleware';
 // import { countryRoute } from './routes/CountryRoutes';
 import { connnection } from './config/db';
+import { HeaderSecurity } from './middleware/headerSecurity';
+
 
 
 dotenv.config();
@@ -33,19 +35,19 @@ const limit=5;
 const custom=new CustomHeader(); //
 // app.use(basicLimiter(limit, 60000));
 app.use(express.json());
-app.use(custom.customHeader("created-by",'vaishnavi'))
+app.use(custom.customHeader("created-by",'vaishnavi'));
+app.use(HeaderSecurity.HelmetSecurity);// classname .function name
 // app.use(logger); // custom middleware for timestamp
 app.use("/api", router);
 // app.use("/error",dynamicError);
 // app.use("/country",countryRoute);
 app.use(errorHandle.errorHandleMiddleware);
-
 app.use(errorHandler); // Called for all errors, including 404, 422, 500
 // app.listen(PORT, () => {
 //   console.log(` Server is running on port ${PORT}`);
 // });
 connnection().then(()=>{
   app.listen(3000,()=>{
-    console.log("app is running on port 3000");
+    console.log(`Express API running at http://localhost:3000/api/users`);
   })
 })
