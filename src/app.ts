@@ -16,11 +16,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { router } from "./routes/userRouter";
 import { errorHandler } from './middleware/errorHandle';
+
 import { CustomHeader } from './middleware/CustomHeader';
 // import { basicLimiter } from './middleware/ratelimiter';
 import { ErrorMiddleWare } from './middleware/errorMiddleware';
 // import { countryRoute } from './routes/CountryRoutes';
 import { connnection } from './config/db';
+
 
 
 dotenv.config();
@@ -41,6 +43,15 @@ app.use("/api", router);
 app.use(errorHandle.errorHandleMiddleware);
 
 app.use(errorHandler); // Called for all errors, including 404, 422, 500
+
+
+
+app.use((req, res, next) => {
+  res.status(404).json({
+    success:false,
+    message:"NOT found page"
+  })
+});
 // app.listen(PORT, () => {
 //   console.log(` Server is running on port ${PORT}`);
 // });
@@ -49,3 +60,4 @@ connnection().then(()=>{
     console.log("app is running on port 3000");
   })
 })
+

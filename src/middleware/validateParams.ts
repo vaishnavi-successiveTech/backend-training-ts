@@ -7,7 +7,6 @@ interface IParamValidator {
   validateParams(req: Request, res: Response, next: NextFunction): void;
 }
 
-
 export class ParamValidator implements IParamValidator {
   public validateParams(req: Request, res: Response, next: NextFunction): void {
     const { id } = req.params;
