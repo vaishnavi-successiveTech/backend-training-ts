@@ -12,7 +12,6 @@ class UserService  {
   try {
     // Check if user already exists
     const existingUser = await userRepo.findUserByEmail(userData.email);
-    console.log(existingUser);
     if (existingUser) {
       throw new Error("User already exists with this email");
     }
