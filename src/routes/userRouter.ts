@@ -19,9 +19,9 @@ import { movieController } from '../modules/movies/controller/movieController';
 import { movieSchema } from '../modules/movies/validateMovie';
 import {  validateUserData } from '../modules/user/validateUser';
 import { createUser, loginUserController } from '../modules/user/controller/user.controller';
-import { verify } from 'crypto';
+
 import { verifyToken } from '../modules/user/verifyToken';
-import { version } from 'os';
+
 import { checkRole } from '../modules/user/checkRole';
 // import { verifyToken } from '../modules/user/verifyToken';
 // import { checkRole } from '../modules/user/checkRole';
@@ -57,9 +57,9 @@ router.post("/teacher",dynamic.validateDynamicSchema,(req:Request,res:Response,n
 })
 // form check validation
 router.post("/validateform",form.validateform ,user.dataValidate.bind(user));
-router.post("/validateform/:id",params.validateParams ,val.validateJwt,user.dataValidate.bind(user));
+router.post("/validateform/:id",params.validateParams,verifyToken ,val.validateJwt,user.dataValidate.bind(user));
 
-router.get("/location",geo.geolocation,(req, res) => {
+router.get("/location",verifyToken,geo.geolocation,(req, res) => {
   res.send(" You are allowed to access this route.");
 });
 
@@ -72,12 +72,12 @@ router.post('/register', schema.validateSchema, (req, res) => {
   });
 });// validateSchema.ts has been checked only
 
-router.get("/heathCheck",health.healthCheck);
+router.get("/heathCheck",verifyToken,health.healthCheck);
 // mongoDb
 
 router.post("/movies",valMovie.validateMovies,movieController.movieResult);
 // for user assignment-10
-router.post("/registeruser",validateUserData,createUser);
+router.post("/signup",validateUserData,createUser);
 // for login
 
 router.post("/userlogin", loginUserController);
@@ -89,7 +89,7 @@ router.get("/userverify",verifyToken,(req, res) => {
 // });
 
 // admin check
-router.get("/adminlogin", verifyToken, (req, res) => {
+router.get("/adminlogin", verifyToken, checkRole("admin"),(req, res) => {
   res.send("Welcome Admin");
 });
 
