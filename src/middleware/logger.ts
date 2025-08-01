@@ -12,7 +12,7 @@
 // }
 
 import { Request, Response, NextFunction } from "express";
-import { IRequestLog } from "../interfaces/IMiddlewares"; // assuming interface is stored separately
+import { IRequestLog } from "../entities/IMiddlewares"; // assuming interface is stored separately
 
 export class LoggerMiddleware {
   

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import geoip from "geoip-lite";
-import { IGeoLocationRequest } from "../interfaces/IMiddlewares";
+import { IGeoLocationRequest } from "../entities/IMiddlewares";
 
 const allowedCountries = ["IN", "US", "CA", "DE"];
 
