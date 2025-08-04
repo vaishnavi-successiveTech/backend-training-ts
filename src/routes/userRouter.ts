@@ -68,14 +68,18 @@ router.get("/error/async", pError.asyncError); // ques - 5
 router.post('/register', schema.validateSchema, (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'User data is valid '
+    message: 'User data is valid'
   });
+
 });// validateSchema.ts has been checked only
 
+
 router.get("/heathCheck",verifyToken,health.healthCheck);
+
 // mongoDb
 
 router.post("/movies",valMovie.validateMovies,movieController.movieResult);
+
 // for user assignment-10
 router.post("/signup",validateUserData,createUser);
 // for login
@@ -94,8 +98,12 @@ router.get("/adminlogin", verifyToken, checkRole("admin"),(req, res) => {
 });
 
 
-export { router };
-
   // "name":"Nayan",
   //   "email":"abc@gmail.com",
+
   //   "password":"454545"
+
+
+export { router };
+
+
