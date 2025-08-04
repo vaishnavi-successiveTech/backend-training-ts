@@ -1,4 +1,8 @@
 export interface ICountry {
-  name: string;
-  code: string;
+  countries: [
+    {
+      countryName: string;
+      code: string;
+    }
+  ];
 }
