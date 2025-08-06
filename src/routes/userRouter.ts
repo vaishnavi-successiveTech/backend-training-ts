@@ -72,11 +72,12 @@ router.post('/register', schema.validateSchema, (req, res) => {
   });
 
 });// validateSchema.ts has been checked only
-
 router.get("/heathCheck",verifyToken,health.healthCheck);
+
 // mongoDb
 
 router.post("/movies",valMovie.validateMovies,movieController.movieResult);
+
 // for user assignment-10
 router.post("/signup",validateUserData,createUser);
 // for login
@@ -96,9 +97,8 @@ router.get("/adminlogin", verifyToken, checkRole("admin"),(req, res) => {
 
   // "name":"Nayan",
   //   "email":"abc@gmail.com",
+
   //   "password":"454545"
 
 
-router.post("/movies",valMovie.validateMovies,movieController.movieResult);
 export { router };
-
