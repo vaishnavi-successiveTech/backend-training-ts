@@ -3,6 +3,8 @@
 import mongoose from "mongoose";
 import CountryModel from "../models/countryModel";
 import { countriesDetails } from "../utils/mockData";
+import { Order } from "../models/Order";
+import { orderMock } from "../utils/mockDataOrder";
 export class ConnectionDb {
 
   public async connectDb(): Promise<void> {
@@ -24,6 +26,24 @@ public async seedCountries(): Promise<void> {
   } catch (error) {
     console.error("Seeding failed",error);
   } finally {
+    await mongoose.disconnect();
+    console.log("Disconnected from MongoDb.");
+  }
+}
+
+public async seedOrder():Promise<void>{
+  try{
+    await this.connectDb();
+    await Order.deleteMany({});
+    console.log("Existing orders deleted");
+    await Order.insertMany(orderMock);
+    console.log("Order seeded successfully");
+  }
+  catch(error){
+    console.log("seeding error",error);
+
+  }
+ finally {
     await mongoose.disconnect();
     console.log("Disconnected from MongoDb.");
   }
