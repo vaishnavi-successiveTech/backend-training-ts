@@ -32,7 +32,8 @@ export const startServer = async () => {
     app.use(errorHandler); 
 
     await conn.connectDb();
-    await conn.seedCountries(); 
+    // await conn.seedCountries(); 
+    await conn.seedOrder();
 
     app.listen(PORT, () => {
       console.log(` Server running on http://localhost:${PORT}`);
