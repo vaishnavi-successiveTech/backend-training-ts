@@ -9,5 +9,7 @@ const userSchema=new mongoose.Schema<IuserRegister>({
     role:{type:String,required:true,default:"user"}
 });
 
+
 export const UserModel=mongoose.model<IuserRegister>("User",userSchema);
 export type { IuserRegister};
+

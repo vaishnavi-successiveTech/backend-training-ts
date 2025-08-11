@@ -1,6 +1,4 @@
 
-import { ICountry } from "../../../entities/ICountry";
-
 import { countryRepository } from "../repository/country.repo";
 // import { countriesDetails } from "../seedCountries";
 

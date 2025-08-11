@@ -3,9 +3,12 @@ import { IuserRegister } from "../../../entities/IuserRegister";
 import { UserModel } from "../../../models/UserModel";
 
 
+
+
 class UserRepository{
 
     public insertManyUsers=async(data:IuserRegister):Promise<IuserRegister> =>{
+      console.log("userrepo");
         const newUser=new UserModel(data);
         console.log("Calling new user");
         const dataa=await newUser.save();
