@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../../models/UserModel";
+import { UserModel } from "../../models/UserModel";
 
 interface JwtPayload {
   id: string;
@@ -19,18 +19,25 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
   const token = header.split(" ")[1];
 
   try {
+   
     const decoded = jwt.verify(token, secret) as JwtPayload;
 
-    const user = await User.findById(decoded.id);
+    // ✅ Then find the user using decoded.id
+    const user = await UserModel.findById(decoded.id);
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
+
+ 
     (req as any).user = user;
+    (req as any).decoded = decoded;
+
     next();
   } catch (err) {
     return res.status(400).json({ success: false, message: "Invalid Token" });
   }
 };
+
 
 // import { Request, Response, NextFunction } from "express";
 // import jwt from "jsonwebtoken";
@@ -70,3 +77,15 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 //     return res.status(400).json({ success: false, message: "Invalid Token" });
 //   }
 // };
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  const user = (req as any).decoded;
+  console.log("user",user);
+  if (user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Access denied. Admins only.",
+    });
+  }
+  next();
+};
+

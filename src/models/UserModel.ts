@@ -8,5 +8,8 @@ const userSchema=new mongoose.Schema<IuserRegister>({
     password:{type:String,required:true},
     role:{type:String,required:true,default:"user"}
 });
-export const User=mongoose.model<IuserRegister>("User",userSchema);
-export type { IuserRegister };
+
+
+export const UserModel=mongoose.model<IuserRegister>("User",userSchema);
+export type { IuserRegister};
+

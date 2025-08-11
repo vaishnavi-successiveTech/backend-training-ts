@@ -1,7 +1,13 @@
 
+<<<<<<< HEAD
 import { ICountry } from "../../../entities/ICountry";
 import CountryModel from "../../../models/countryModel";
 import { countriesDetails } from "../seedCountries";
+=======
+import CountryModel from "../../../models/countryModel"
+import { countriesDetails } from "../seedCountries";
+// import { countriesDetails } from "../seedCountries"
+>>>>>>> 55dfdb53981cbfb44338e34079b4a36ead59cd41
 
 
 class CountryRepository{

@@ -29,7 +29,6 @@ class UserService  {
   }
 };
 
-
   public loginUser = async (email: string, password: string) => {
     const existingUser = await userRepo.findUserByEmail(email);
 

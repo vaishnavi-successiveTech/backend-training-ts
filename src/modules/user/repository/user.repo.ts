@@ -1,6 +1,7 @@
 
 import { IuserRegister } from "../../../entities/IuserRegister";
-import { User } from "../../../models/UserModel";
+import { UserModel } from "../../../models/UserModel";
+
 
 
 
@@ -8,14 +9,14 @@ class UserRepository{
 
     public insertManyUsers=async(data:IuserRegister):Promise<IuserRegister> =>{
       console.log("userrepo");
-        const newUser=new User(data);
+        const newUser=new UserModel(data);
         console.log("Calling new user");
         const dataa=await newUser.save();
         console.log("dataa",dataa);
         return dataa;
     }
       public findUserByEmail = async (email: string) => {
-    return await User.findOne({ email });
+    return await UserModel.findOne({ email });
   };
 
 }
