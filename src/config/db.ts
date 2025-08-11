@@ -1,5 +1,4 @@
-
-
+// db.ts
 import mongoose from "mongoose";
 import CountryModel from "../models/countryModel";
 import { countriesDetails } from "../utils/mockData";
@@ -29,7 +28,6 @@ public async seedCountries(): Promise<void> {
   }
 }
 }
-
 // import mongoose  from "mongoose";
 
 // export const connnection=async()=>{

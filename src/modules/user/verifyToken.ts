@@ -14,11 +14,23 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
 
   try {
     const decoded = jwt.verify(token, secret);
-    res.locals.user = decoded; 
+    (req as any).decoded = decoded; 
     //   (req as AuthRequest).user = decoded; 
     // next();
     next();
   } catch (err) {
     return res.status(400).json({ success: false, message: "Invalid Token" });
   }
+};
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  const user = (req as any).decoded;
+  console.log("user",user);
+  if (user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Access denied. Admins only.",
+    });
+  }
+  next();
 };
