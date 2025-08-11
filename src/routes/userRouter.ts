@@ -17,6 +17,13 @@ import { HealthControls } from '../controllers/healthController';
 import { UserController } from '../controllers/userController';
 import { movieController } from '../modules/movies/controller/movieController';
 import { movieSchema } from '../modules/movies/validateMovie';
+import {  validateUserData } from '../modules/user/validateUser';
+import { createUser, loginUserController } from '../modules/user/controller/user.controller';
+import { verify } from 'crypto';
+import { verifyToken } from '../modules/user/verifyToken';
+import { version } from 'os';
+// import { verifyToken } from '../modules/user/verifyToken';
+// import { checkRole } from '../modules/user/checkRole';
 
 const router=Router();
 // const user=new userController();
@@ -70,5 +77,29 @@ router.get("/heathCheck",health.healthCheck);
 // mongoDb
 
 router.post("/movies",valMovie.validateMovies,movieController.movieResult);
+
+// for user assignment-10
+router.post("/registeruser",validateUserData,createUser);
+// for login
+
+router.post("/userlogin", loginUserController);
+router.get("/userverify",verifyToken,(req, res) => {
+  res.send("Welcome User");})
+  
+  // router.get("/user-dashboard", verifyToken, checkRole(["user"]), (req, res) => {
+//   res.send("Welcome User");
+// });
+
+// admin check
+// router.get("/adminlogin", verifyToken, checkRole(["admin"]), (req, res) => {
+//   res.send("Welcome Admin");
+// });
+
+
+  // "name":"Nayan",
+  //   "email":"abc@gmail.com",
+  //   "password":"2456"
+
 export { router };
+
 

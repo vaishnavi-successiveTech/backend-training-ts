@@ -17,8 +17,9 @@ const student=Joi.object({
 })
 
 const teacher=Joi.object({
-    teacherName:Joi.string().alphanum().min(3).max(30).required(),
+    teacherName:Joi.string().min(3).max(30).required(),
     subject:Joi.string().required()
 })
 
 export const schemaList:{[key:string]:Joi.ObjectSchema}={student,teacher}
+// helemt 
