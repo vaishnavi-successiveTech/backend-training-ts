@@ -20,9 +20,11 @@ import { movieSchema } from '../modules/movies/validateMovie';
 import {  validateUserData } from '../modules/user/validateUser';
 import { createUser, loginUserController } from '../modules/user/controller/user.controller';
 
-import { verifyToken } from '../modules/user/verifyToken';
 
-import { checkRole } from '../modules/user/checkRole';
+import { verify } from 'crypto';
+import {  verifyToken } from '../modules/user/verifyToken';
+import { version } from 'os';
+
 // import { verifyToken } from '../modules/user/verifyToken';
 // import { checkRole } from '../modules/user/checkRole';
 
@@ -79,11 +81,13 @@ router.get("/heathCheck",verifyToken,health.healthCheck);
 router.post("/movies",valMovie.validateMovies,movieController.movieResult);
 
 // for user assignment-10
-router.post("/signup",validateUserData,createUser);
+
+router.post("/registerUser",validateUserData,createUser);
+
 // for login
 
-router.post("/userlogin", loginUserController);
-router.get("/userverify",verifyToken,(req, res) => {
+router.post("/userLogin", loginUserController);
+router.get("/userVerify",verifyToken,(req, res) => {
   res.send("Welcome User");})
   
   // router.get("/user-dashboard", verifyToken, checkRole(["user"]), (req, res) => {
@@ -91,9 +95,11 @@ router.get("/userverify",verifyToken,(req, res) => {
 // });
 
 // admin check
-router.get("/adminlogin", verifyToken, checkRole("admin"),(req, res) => {
+
+router.post("/adminLogin", verifyToken, (req, res) => {
   res.send("Welcome Admin");
 });
+
 
   // "name":"Nayan",
   //   "email":"abc@gmail.com",
